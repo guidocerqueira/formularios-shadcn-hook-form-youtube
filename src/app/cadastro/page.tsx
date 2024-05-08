@@ -7,20 +7,22 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
-type TFormLogin = {
+type TFormCadastro = {
+  name: string
   email: string
   password: string
 }
 
-export default function Home() {
-  const form = useForm<TFormLogin>({
+export default function Cadastro() {
+  const form = useForm<TFormCadastro>({
     defaultValues: {
       email: '',
-      password: ''
+      password: '',
+      name: ''
     }
   })
 
-  function handleSubmitLogin(data: TFormLogin){
+  function handleSubmitCadastro(data: TFormCadastro){
     console.log(data)
   }
 
@@ -28,15 +30,28 @@ export default function Home() {
     <div className="w-full h-screen flex items-center justify-center">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Login</CardTitle>
+          <CardTitle>Cadastro</CardTitle>
           <CardDescription>
-            Digite seu email e senha para entrar no sistema.
+            Digite seus dados para cadastrar no sistema.
           </CardDescription>
         </CardHeader>
 
         <CardContent>
           <Form {...form}>
-            <form className="space-y-4" onSubmit={form.handleSubmit(handleSubmitLogin)}>
+            <form className="space-y-4" onSubmit={form.handleSubmit(handleSubmitCadastro)}>
+              <FormField 
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nome</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Digite seu nome" {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
               <FormField 
                 control={form.control}
                 name="email"
@@ -63,14 +78,14 @@ export default function Home() {
                 )}
               />
 
-              <Button className="w-full" type="submit">Entrar</Button>
+              <Button className="w-full" type="submit">Cadastrar</Button>
             </form>
           </Form>
         </CardContent>
 
         <CardFooter>
           <CardDescription>
-            Não tem uma conta? <Link className="text-white" href='/cadastro'>Cadastre-se</Link>
+            Já tem uma conta? <Link className="text-white" href='/'>Faça o Login</Link>
           </CardDescription>
         </CardFooter>
       </Card>
